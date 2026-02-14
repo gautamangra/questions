@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine 💘</title>
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#ff4d6d,#ff8fab);
+  font-family:Arial, sans-serif;
+  overflow:hidden;
+}
+
+.card{
+  background:white;
+  padding:30px;
+  border-radius:25px;
+  text-align:center;
+  width:90%;
+  max-width:420px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.2);
+  animation:pop 0.6s ease;
+}
+
+@keyframes pop{
+  from{transform:scale(0.5);opacity:0;}
+  to{transform:scale(1);opacity:1;}
+}
+
+h1{
+  color:#ff4d6d;
+  font-size:22px;
+}
+
+button{
+  padding:15px 30px;
+  font-size:15px;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+  margin:10px;
+  transition:0.3s;
+}
+
+#yes{
+  background:#ff4d6d;
+  color:white;
+}
+
+#no{
+  background:#ddd;
+  position:absolute;
+}
+
+.optionBtn{
+  background:#ff8fab;
+  color:white;
+  width:100%;
+  margin-top:10px;
+}
+
+.heart{
+  position:absolute;
+  font-size:22px;
+  animation:float 2s linear forwards;
+}
+
+@keyframes float{
+  0%{opacity:1;transform:translateY(0);}
+  100%{opacity:0;transform:translateY(-250px);}
+}
+
+.loveMessage{
+  margin-top:15px;
+  font-size:18px;
+  color:#ff4d6d;
+  font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h1 id="question">Will u be my Valentine sofi? 💖</h1>
+
+  <button id="yes">Yes 😍</button>
+  <button id="no">No 🙃</button>
+
+  <div id="nextSection"></div>
+</div>
+
+<script>
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+const question = document.getElementById("question");
+const nextSection = document.getElementById("nextSection");
+
+let yesSize = 1;
+let noTexts = [
+  "No 🙃",
+  "Are you sure? 🥺",
+  "Really sure?? 😭",
+  "Think again 😏",
+  "Last chance 👀"
+];
+let clickCount = 0;
+
+function moveButton(){
+  const x = Math.random() * (window.innerWidth - 100);
+  const y = Math.random() * (window.innerHeight - 50);
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
+
+  yesSize += 0.2;
+  yesBtn.style.transform = "scale(" + yesSize + ")";
+
+  if(clickCount < noTexts.length - 1){
+    clickCount++;
+    noBtn.innerHTML = noTexts[clickCount];
+  }
+}
+
+noBtn.addEventListener("mouseover", moveButton);
+noBtn.addEventListener("touchstart", moveButton);
+
+yesBtn.addEventListener("click", function(){
+
+  question.innerHTML = "YAYYY 💘 Mi Amor, I love u so so much 😍💘 My Valentine forever!!! You’re officially my Valentine!!! 😍";
+  noBtn.style.display = "none";
+  yesBtn.style.display = "none";
+
+  explodeHearts();
+
+  setTimeout(showDateOptions,1500);
+});
+
+function explodeHearts(){
+  for(let i=0;i<60;i++){
+    let heart = document.createElement("div");
+    heart.innerHTML="💖";
+    heart.className="heart";
+    heart.style.left=Math.random()*window.innerWidth+"px";
+    heart.style.top=Math.random()*window.innerHeight+"px";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),2000);
+  }
+}
+
+function showDateOptions(){
+  question.innerHTML = "So… what’s our Valentine date night plan? 😏";
+
+  nextSection.innerHTML = `
+    <button class="optionBtn" onclick="finalLove()">
+      Eat food together on video call 🍕
+    </button>
+
+    <button class="optionBtn" onclick="finalLove()">
+      Watch our favorite movies / TV shows 🍿
+    </button>
+
+    <button class="optionBtn" onclick="finalLove()">
+      Just chill and vibe together ✨
+    </button>
+
+    <button class="optionBtn" onclick="finalLove()">
+      Talk about everything & see where things go 💕
+    </button>
+  `;
+}
+
+function finalLove(){
+  question.innerHTML = "It’s a date 😍💘";
+  nextSection.innerHTML = `
+    <div class="loveMessage">
+      I love u 3000 💖<br><br>
+      mi amor, mi croissant 💕<br>
+      mi hermosa, mi osita 🌹<br>
+      mi sofi bebe 🥰
+    </div>
+  `;
+  explodeHearts();
+}
+</script>
+
+</body>
+</html>
